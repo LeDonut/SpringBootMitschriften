@@ -1,0 +1,43 @@
+### Abstraktion und Qualifizierungen
+
+#### Der Name einer Bean und ihr Alias
+Eine Möglichkeit, eine Abstraktion einzuführen, ist über den Namen.  
+Jede Spring-managed Bean hat automatisch einen Namen und kann sogar mehr als einen Namen haben.  
+Weitere optionale Namen nennen sich Aliases. Ohne explizite Benennung wird der Name automatisch vom Framework gesetzt.
+Bei Komponenten ist es der kleingeschriebene Name der Komponente und bei den Fabrikmethoden ist es der Name der Fabrikmethode.  
+Wenn der Name bekannt ist, lässt sich die Bean unter diesem Namen aus dem Kontext holen. Dadurch ist der eigentliche Klassenname dann gar nicht mehr so wichtig.  
+
+##### Namen bei @Component
+`@Component` hat genau ein Annotationsattribut value, über das wir den Namen der Komponente bestimmen können:
+```java
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Indexed
+public @interface Component {
+String value() default "";
+}
+```
+Standardmäßig ist kein Name vergeben, also vergibt das Spring Framework den Namen automatisch.
+
+##### Namen bei @Bean
+`@Bean` deklariert für einen explizierten Namen ebenfalls ein Annotationsattribut value:
+```java
+public interface Bean {
+    @AliasFor(value="name")
+    String[] value() default {};
+    
+    @AliasFor(value="value")
+    String[] name() default {};
+}
+```
+Bei mehreren Annotationsattributen ist "name" sprechender als "value".
+
+
+#### Basistypen
+
+#### ObjectProvider
+
+#### @Order und @AutoConfiguration
+
+#### Verhalten bei ausgewählten Vererbungsbeziehungen
